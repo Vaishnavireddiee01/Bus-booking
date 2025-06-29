@@ -48,7 +48,7 @@ class BusDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=BusSerializer
     permission_classes=[IsAuthenticated]
 
-    def get_permissions(self):
-        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
-            return [IsAuthenticated()]
-        return super().get_permissions()
+#    def get_permissions(self):
+ #       if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+  #          return [IsAuthenticated()]
+   #     return super().get_permissions()
