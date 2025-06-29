@@ -81,9 +81,9 @@ class BookingView(APIView):
     # Uncomment the following lines if you want to restrict access to authenticated users
     # permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        # Logic for booking a seat goes here
-        pass
+#    def post(self, request):
+ #       # Logic for booking a seat goes here
+  #      pass
 
 #    def get_permissions(self):
  #       if self.request.method in ['PUT', 'PATCH', 'DELETE']:
