@@ -43,3 +43,12 @@ class LoginView(APIView):
 class BusListCreateView(generics.ListCreateAPIView):
     queryset=Bus.objects.all()
     serializer_class=BusSerializer
+class BusDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Bus.objects.all()
+    serializer_class=BusSerializer
+    permission_classes=[IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            return [IsAuthenticated()]
+        return super().get_permissions()
