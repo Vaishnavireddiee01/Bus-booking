@@ -11,8 +11,8 @@ from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .serializers import UserRegisterSerializer, BusSerializer
-from .models import Bus
+from .serializers import UserRegisterSerializer, BusSerializer, BookingSerializer
+from .models import Bus, seat, Booking
 
 class RegisterView(APIView):
     def post(self, request):
@@ -48,7 +48,55 @@ class BusDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=BusSerializer
     permission_classes=[IsAuthenticated]
 
+class BookingView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        seat_id=request.data.get('seat')
+
+        try:
+            seat=seat.objects.get(id=seat_id)
+
+            if seat.is_booked:
+                return Response({'error': 'Seat is already booked'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            seat.is_booked = True
+            seat.save()
+
+            bookings = Booking.objects.create(
+                user=request.user,
+                bus=seat.bus,
+                seat=seat
+            )
+
+            serializer=BookingSerializer(bookings)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except seat.DoesNotExist:
+            return Response({'error': 'Seat does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+
+    """
+    View to handle booking of seats.
+    """
+    # Uncomment the following lines if you want to restrict access to authenticated users
+    # permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Logic for booking a seat goes here
+        pass
+
 #    def get_permissions(self):
  #       if self.request.method in ['PUT', 'PATCH', 'DELETE']:
   #          return [IsAuthenticated()]
    #     return super().get_permissions()
+
+class UserBookingView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+
+        if request.user.id != user_id:
+            return Response({'error': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        bookings = Booking.objects.filter(user_id=user_id)
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

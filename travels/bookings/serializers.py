@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Bus, seat
+from .models import Bus, seat, Booking
 from django.contrib.auth.models import User
 
 
@@ -33,3 +33,12 @@ class seatSerializer(serializers.ModelSerializer):
 
 
 
+class BookSeatSerializer(serializers.ModelSerializer):
+    bus=serializers.StringRelatedField()
+    seat=seatSerializer
+    user=serializers.StringRelatedField()
+
+    class Meta:
+        model = Booking
+        fields = '__all__'
+        read_only_fields = ['user', 'booking_time', 'bus', 'seat']
