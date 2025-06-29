@@ -33,7 +33,7 @@ class seatSerializer(serializers.ModelSerializer):
 
 
 
-class BookSeatSerializer(serializers.ModelSerializer):
+class BookingSerializer(serializers.ModelSerializer):
     bus=serializers.StringRelatedField()
     seat=seatSerializer
     user=serializers.StringRelatedField()

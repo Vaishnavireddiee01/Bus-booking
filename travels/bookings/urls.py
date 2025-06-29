@@ -1,6 +1,6 @@
 
 from django.urls import path
-from views import RegisterView, LoginView, BusListCreateView, UserBookingView, BusDetailView, BookingView
+from .views import RegisterView, LoginView, BusListCreateView, UserBookingView, BusDetailView, BookingView
 
 
 urlpatterns = [
