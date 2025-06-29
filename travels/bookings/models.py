@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Bus(models.Model):
@@ -23,4 +23,14 @@ class seat(models.Model):
 
     def __str__(self):
         return f"{self.bus} {self.seat_number}"
+    
+
+class Booking(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    bus=models.ForeignKey(Bus, on_delete=models.CASCADE)
+    seat=models.ForeignKey(seat, on_delete=models.CASCADE)
+    booking_time=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} booked {self.bus.bus_name} seat {self.seat.seat_number} at {self.booking_time} Bus starts at {self.bus.start_time} and reaches at {self.bus.reach_time}"
     
