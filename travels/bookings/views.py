@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .serializers import UserRegisterSerializer, BusSerializer, BookingSerializer
-from .models import Bus, seat, Booking
+from .models import Bus, Seat, Booking
 
 class RegisterView(APIView):
     def post(self, request):
@@ -56,7 +56,7 @@ class BookingView(APIView):
         seat_id=request.data.get('seat')
 
         try:
-            seat=seat.objects.get(id=seat_id)
+            seat=Seat.objects.get(id=seat_id)
 
             if seat.is_booked:
                 return Response({'error': 'Seat is already booked'}, status=status.HTTP_400_BAD_REQUEST)
@@ -72,7 +72,7 @@ class BookingView(APIView):
 
             serializer=BookingSerializer(bookings)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except seat.DoesNotExist:
+        except Seat.DoesNotExist:
             return Response({'error': 'Seat does not exist'}, status=status.HTTP_400_BAD_REQUEST)
 
     """
