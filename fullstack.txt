@@ -1,0 +1,20 @@
+backend:
+
+set up and installations
+Apps and models
+serializers
+views
+admin dashboard
+crud api
+Api testing
+
+
+Frontend:
+
+register login
+authentication
+bus list
+filter
+seats available
+user bookings
+styling

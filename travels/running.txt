@@ -1,5 +1,6 @@
 commands to run (django) : 
 
+to create virtual env : py -m venv venv
 cd django
 .\aenv\Scripts\activate
 
