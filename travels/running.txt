@@ -1,0 +1,16 @@
+commands to run (django) : 
+
+cd django
+.\aenv\Scripts\activate
+
+
+cd travels
+py manage.py runserver
+
+
+requirements topic in tutorial:
+cors-headers to connect backend and frontend data
+
+cors-headers helps us in accessing the urls in 
+frontend which we have created in backend
+
